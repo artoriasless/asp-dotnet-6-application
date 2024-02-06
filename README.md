@@ -35,7 +35,7 @@
 
 基于分支的作用，可直接 clone 主分支后，在此基础上进行修改，补充接口和服务、补充前端页面
 
-## about dev plan ...
+## about develop plan ...
 
 ### milestone 1
 
@@ -51,4 +51,53 @@
 
 ## Sln Detail
 
-> 简单介绍说明一下模板项目基础之上的一些自定义模块，便于二次开发使用
+> 简单介绍说明一下模板项目基础之上的一些自定义模块，以及魔改后的配置，便于二次开发使用
+
+### 环境配置
++ 前景
+  + `Properties/launchSettings.json` 的配置主要是用于本地开发启动应用时传入的一些配置信息
+  + 可以指定本地启动项目时，使用哪一个配置
++ 配置
+  + 项目 **.sln** 中配置了当前解决方案中定义的一些配置名：**`Debug`** 、 **`Release`** 等
++ 指定环境变量名
+  + 模板项目默认的 **env variable** 是 **`Development`** （详见 `Properties/launchSettings.json`）
+  + 为了方便自己开发，以及环境配置名一致，将 **`ASPNETCORE_ENVIRONMENT`** 字段调整为 **`Debug`**
+  + 这样的调整带来的影响
+    ```csharp
+    // 原先默认的判断是否 dev 环境
+    if (app.Environment.IsDevelopment()) {
+      // do something in dev enviroment
+    }
+
+    // 判断逻辑调整为
+    // 如果你习惯使用 development ，则在 .sln 中修改配置名，调整判断逻辑
+    if (app.Environment.EnvironmentName == "Debug") {
+      // do someing i dev enviroment
+    }
+    ```
++ 应用配置
+  + 项目自带了 **transform settings** 的逻辑
+  + 默认配置：**`appsettings.json`**
+  + 不同环境下的配置：**`appsettings.{enviroment}.json`** （**`appsettings.Debug.json`**）
+  + 在使用对应环境配置进行构建时，会进行 merge
+
+### 接口测试
++ 项目已集成 **`NSwag`** ，启动后访问地址 **`http://localhost:<port>/swagger/index.html`** 即可进行测试
+
+### Controllers
+> 标准 MVC 模式的 controller 层
+
+### Models
+> 数据库表结构对应的实体类，映射到对应的数据库表
+
+### DTOs
+> 端侧传入的参数，或者返回给端侧的数据结构体
+
+### Services
+> 标准 MVC 模式的 service 层
+
+### wwwroot
+> 静态资源存储目录，不再赘述
+
+### ~~Views~~
+> 前后端分离，不涉及后端渲染视图了，直接移除了该目录

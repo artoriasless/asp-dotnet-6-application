@@ -1,0 +1,24 @@
+.vscode
+.vs
+
+# 临时文件
+*.user
+*.suo
+*.cache
+*.log
+
+########################
+###  server 部分
+########################
+# 忽略生成文件
+dak-site-server/bin/
+dak-site-server/obj/
+# 忽略配置文件
+dak-site-server/Web.config
+dak-site-server/App.config
+# 忽略 NuGet 包目录
+dak-site-server/packages/
+
+########################
+###  ui 部分
+########################
