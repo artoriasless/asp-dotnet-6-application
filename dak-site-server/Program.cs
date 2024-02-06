@@ -1,8 +1,8 @@
 using DakSite;
+using DakSite.Middleware;
 using DakSite.Services;
 using Microsoft.EntityFrameworkCore;
 using NSwag;
-using Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -80,7 +80,8 @@ app.MapControllerRoute(name: "default", pattern: "{controller}/{action}");
 
 if (isDev)
 {
-    // 开发环境，转发到前端开发服务器地址：http://localhost:8080
+    // 开发环境，重定向到 nextjs 服务器
+    app.UseMiddleware<RedirectToNextServerInDev>();
 }
 else
 {

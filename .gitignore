@@ -7,6 +7,11 @@
 *.cache
 *.log
 
+.pnp.js
+.yarn/install-state.gz
+.DS_Store
+*.pem
+
 ########################
 ###  server 部分
 ########################
@@ -22,3 +27,33 @@ dak-site-server/packages/
 ########################
 ###  ui 部分
 ########################
+
+# dependencies
+dak-site-ui/node_modules
+dak-site-ui/package-lock.json
+dak-site-ui/.pnp
+
+# testing
+dak-site-ui/coverage
+
+# next.js
+dak-site-ui/.next/
+dak-site-ui/out/
+
+# production
+dak-site-ui/build
+
+# debug
+dak-site-ui/npm-debug.log*
+dak-site-ui/yarn-debug.log*
+dak-site-ui/yarn-error.log*
+
+# local env files
+dak-site-ui/.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

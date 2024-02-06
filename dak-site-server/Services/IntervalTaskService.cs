@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-
 namespace DakSite.Services
 {
     public class IntervalTaskService : BackgroundService
@@ -8,8 +6,8 @@ namespace DakSite.Services
         private readonly IConfiguration _config;
 
         private const int AutoRunIntervalDay = 1;
-        private const int AutoRunInterval_1 = 1000 * 5;
-        private const int AutoRunInterval_2 = 1000 * 10;
+        private const int AutoRunIntervalMilliSeconds_1 = 1000 * 60;
+        private const int AutoRunIntervalMilliSeconds_2 = 1000 * 120;
 
         private Timer? AutoRunTimer_1 = null;
         private Timer? AutoRunTimer_2 = null;
@@ -28,7 +26,7 @@ namespace DakSite.Services
                     DoTask_1,
                     null,
                     TimeSpan.Zero,
-                    TimeSpan.FromMilliseconds(AutoRunInterval_1)
+                    TimeSpan.FromMilliseconds(AutoRunIntervalMilliSeconds_1)
                 );
             }
             if (AutoRunTimer_2 == null)
@@ -37,7 +35,7 @@ namespace DakSite.Services
                     DoTask_2,
                     null,
                     TimeSpan.Zero,
-                    TimeSpan.FromMilliseconds(AutoRunInterval_2)
+                    TimeSpan.FromMilliseconds(AutoRunIntervalMilliSeconds_2)
                 );
             }
 
@@ -52,7 +50,7 @@ namespace DakSite.Services
             string dateTimeStr = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             _logger.LogInformation(
-                $"【task-1】do task 1 at {dateTimeStr} for every {AutoRunInterval_1} ms"
+                $"【task - 1】{dateTimeStr} 每隔 {AutoRunIntervalMilliSeconds_1} 毫秒执行一次"
             );
         }
 
@@ -61,7 +59,7 @@ namespace DakSite.Services
             string dateTimeStr = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             _logger.LogInformation(
-                $"【task-2】do task 2 at {dateTimeStr} for every {AutoRunInterval_2} ms"
+                $"【task - 2】{dateTimeStr} 每隔 {AutoRunIntervalMilliSeconds_2} 毫秒执行一次"
             );
         }
     }

@@ -27,7 +27,7 @@ namespace DakSite.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("InitializeService StartAsync");
+            _logger.LogInformation("> 开始执行初始化任务，每次应用启动的时候会执行一次");
 
             // 1. 初始化数据库
             await InitDB();
@@ -40,6 +40,8 @@ namespace DakSite.Services
         {
             await Task.Run(() =>
             {
+                _logger.LogInformation("> 初始化数据库表，确保表存在...");
+
                 DBContext.Database.EnsureCreated();
             });
         }
@@ -51,7 +53,7 @@ namespace DakSite.Services
                 string initConfig = _config["TestData:TestInit"] ?? "";
 
                 _logger.LogInformation(
-                    $"InitializeService InitOthers for demo with init config: {initConfig}..."
+                    $"> 其他初始化任务，获取 appConfig 配置的 TestData.TestInit: {initConfig}..."
                 );
             });
         }

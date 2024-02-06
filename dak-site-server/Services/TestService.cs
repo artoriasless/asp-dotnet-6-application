@@ -1,8 +1,6 @@
-using DakSite;
 using DakSite.Models;
-using DakSite.Services;
 
-namespace Services
+namespace DakSite.Services
 {
     public class TestService : BaseService
     {
