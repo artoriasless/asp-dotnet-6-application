@@ -102,8 +102,37 @@
 ### ~~Views~~
 > 前后端分离，不涉及后端渲染视图了，直接移除了该目录
 
+### 数据库表结构初始化 + Migration
+> 如果在项目初期已经完成了数据库表结构设计，快速开发的话，可以直接使用 **`DBContext.database.EnsureCreated()`**，但是从长远角度考虑，还是建议使用项目中最新的 **`migrate`** 版本
+>
+> **先大概说明一下整体流程** ： 
+>
+> ① 创建 models ，定义模型，映射数据库表
+>
+> ② 使用 EF 工具创建相关的 migration 代码（ SQL 语句）
+>
+> ③ 项目启动后，会根据 migration ，同步数据库表结构
+>
+> 另外提供一点小 tips ：EF calls CreateWebHostBuilder or BuildWebHost without running Main. So Iconfiguration is null.
+>
+> 所以在 **`MySqlDBContext`** 的基础之上还有一个 **`Factory`** ，执行 EF 工具的时候会调用该 **`Factory`**
+
+1. 需要安装 **`EF`** 工具：`dotnet tool install --global dotnet-ef`
+2. 添加 **Migrattion**（需要和项目配置文件同目录执行）：`dotnet ef migrations add InitTable --verbose`
+    ```bash
+    建议命名规则：<operateType>_<tableName>_<subOp> ，如果涉及到多个表，或者是初始化，可考虑将表名去掉
+    InitTable
+    UpdateTable_test_addColumnAlias
+    UpdateTable_test_modifyColumnName
+    ```
+3. 在 **Migrations** 目录下有相关的代码，会根据当前最新版本的 **Model** 自动生成相关 SQL 语句
+
 ### 其他细节说明
 1. **`Directory.Build.props`** + **`Directory.Build.targets`**
 > DTOs 目录中存放的是和端侧通信的数据结构，考虑到习惯，采用的小驼峰的命名方式
 >
 > 但是 c# 中首选且建议用大驼峰作为属性名，所以针对该目录，抑制 IDE1006 的警告
+2. **`如何切换配置（环境：Debug、Release、Dev、Staging、Prod···）`**
+> 在 **`Properties\launchSettings.json`** 中，修改 **`ASPNETCORE_ENVIRONMENT`** 为对应的环境配置名即可
+>
+> 然后本地启动项目
