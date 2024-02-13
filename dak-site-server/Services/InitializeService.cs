@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace DakSite.Services
 {
     /// <summary>
@@ -38,23 +40,20 @@ namespace DakSite.Services
 
         private async Task InitDB()
         {
+            _logger.LogInformation("> 执行 migration ，保证表结构同步...");
+
             await Task.Run(() =>
             {
-                _logger.LogInformation("> 初始化数据库表，确保表存在...");
-
-                DBContext.Database.EnsureCreated();
+                DBContext.Database.Migrate();
             });
         }
 
         private async Task InitOthers()
         {
-            await Task.Run(() =>
-            {
-                string initConfig = _config["TestData:TestInit"] ?? "";
+            _logger.LogInformation("> 执行其他初始化任务...");
 
-                _logger.LogInformation(
-                    $"> 其他初始化任务，获取 appConfig 配置的 TestData.TestInit: {initConfig}..."
-                );
+            await Task.Run(() => {
+                // another init task
             });
         }
     }

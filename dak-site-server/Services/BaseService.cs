@@ -7,9 +7,6 @@ namespace DakSite.Services
         public BaseService(MySqlDBContext dbContext)
         {
             DBContext = dbContext;
-
-            // 确保数据库表存在
-            dbContext.Database.EnsureCreated();
         }
     }
 }

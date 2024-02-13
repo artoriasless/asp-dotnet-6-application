@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DatabaseSQL\**" />
+    <Content Remove="DatabaseSQL\**" />
+    <EmbeddedResource Remove="DatabaseSQL\**" />
+    <None Remove="DatabaseSQL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.2" />
     <PackageReference Include="NSwag.Annotations" Version="14.0.2" />
     <!--

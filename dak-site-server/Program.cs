@@ -37,7 +37,7 @@ builder.Services.AddCors(options =>
 });
 #endregion
 
-#region 初始化 dbcontext
+#region 初始化 dbcontext ，连接 mysql 数据库
 string connectionString = builder.Configuration.GetConnectionString("MySql") ?? "";
 
 builder.Services.AddDbContext<MySqlDBContext>(options =>
@@ -47,13 +47,13 @@ builder.Services.AddDbContext<MySqlDBContext>(options =>
 #endregion
 
 #region 注册 service 服务
-builder.Services.AddSingleton<TestService>();
-
 // 添加应用初始化服务
 builder.Services.AddHostedService<InitializeService>();
 
 // 添加应用定时任务服务
 builder.Services.AddHostedService<IntervalTaskService>();
+
+builder.Services.AddSingleton<TestService>();
 #endregion
 
 WebApplication app = builder.Build();
